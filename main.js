@@ -8,32 +8,32 @@ canvas.height = parseInt(paint_style.getPropertyValue('height'));
 let mouse = inicio = fim = { x: 0, y: 0 };
 
 function main() {
-    canvas.addEventListener('mousemove', function (e) {
-      mouse.x = e.pageX - this.offsetLeft;
-      mouse.y = e.pageY - this.offsetTop;
-    }, false);
+  canvas.addEventListener('mousemove', function (e) {
+    mouse.x = e.pageX - this.offsetLeft;
+    mouse.y = e.pageY - this.offsetTop;
+  }, false);
 
-    ctx.lineWidth = 1;
-    ctx.lineJoin = 'round';
-    ctx.lineCap = 'round';
+  ctx.lineWidth = 1;
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
 
-    canvas.addEventListener('mousedown', function (e) {
-      inicio.x = e.pageX - this.offsetLeft;
-      inicio.y = e.pageY - this.offsetTop;
-      inicio.x = mouse.x;
-      inicio.y = mouse.y;
-      ctx.beginPath();
-      ctx.moveTo(inicio.x, inicio.y);
-    }, false);
+  canvas.addEventListener('mousedown', function (e) {
+    inicio.x = e.pageX - this.offsetLeft;
+    inicio.y = e.pageY - this.offsetTop;
+    inicio.x = mouse.x;
+    inicio.y = mouse.y;
+    ctx.beginPath();
+    ctx.moveTo(inicio.x, inicio.y);
+  }, false);
 
-    canvas.addEventListener('mouseup', function (e) {
-      fim.x = mouse.x;
-      fim.y = mouse.y;
-      bresenhamLinha(inicio, fim);
-    }, false);
+  canvas.addEventListener('mouseup', function (e) {
+    fim.x = mouse.x;
+    fim.y = mouse.y;
+    bresenhamLinha(inicio, fim);
+  }, false);
 }
 
-function bresenhamLinha(ponto1, ponto2){
+function bresenhamLinha(ponto1, ponto2) {
   var dx = ponto2.x - ponto1.x;
   var dy = ponto2.y - ponto1.y;
   var inclinacao = 0;
@@ -48,10 +48,10 @@ function bresenhamLinha(ponto1, ponto2){
     inclinacao = -1;
   else
     inclinacao = 1;
-  
+
   var d;
   var atual = ponto1;
-  
+
   ctx.lineTo(atual.x, atual.y);
 
   if (dx >= inclinacao * dy) {    // m<=1
@@ -120,4 +120,29 @@ function bresenhamLinha(ponto1, ponto2){
   }
   ctx.lineTo(atual.x, atual.y);
   ctx.stroke();
+}
+
+function circulo() {
+  canvas.addEventListener('mousemove', function (e) {
+    mouse.x = e.pageX - this.offsetLeft;
+    mouse.y = e.pageY - this.offsetTop;
+  }, false);
+  canvas.addEventListener('mousedown', function (e) {
+    inicio.x = e.pageX - this.offsetLeft;
+    inicio.y = e.pageY - this.offsetTop;
+  });
+  canvas.addEventListener('mouseup', function (e) {
+    fim.x = e.pageX - this.offsetLeft;
+    fim.y = e.pageY - this.offsetTop;
+    let raio = Math.sqrt(fim.x - inicio.x) + Math.sqrt(fim.y - inicio.y);
+    let i = 0, inc;
+    if (raio >= 1)
+      inc = 1 / raio;
+    else
+      inc = 1;
+    for (i; i < 360; i = i + inc) {
+      ctx.fillStyle = 'black';
+      ctx.fillRect(Math.round(raio * Math.cos(i)) + inicio.x, Math.round(raio * Math.sin(i)) + inicio.y, 1, 1);
+    }
+  });
 }
