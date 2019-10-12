@@ -9,11 +9,37 @@ var inicio = { x: 0, y: 0 };
 var fim = { x: 0, y: 0 };
 var mouse = { x: 0, y: 0 };
 
-$('input[type=radio][name=operacao]').change(main());
-
 function main() {
-  const reta = document.getElementById('reta');
-  if (reta.getAttribute('checked') === 'checked') {
+  // const reta = document.getElementById('reta');
+  // const circulo = document.getElementById('circulo');
+  // if (reta.getAttribute('checked') === 'checked') {
+  $('#reta').click(function () {
+
+    canvas.removeEventListener('mousemove', false);
+    canvas.addEventListener('mousemove', function (e) {
+      mouse.x = e.pageX - this.offsetLeft;
+      mouse.y = e.pageY - this.offsetTop;
+    }, false);
+
+    ctx.lineWidth = 1;
+
+    canvas.removeEventListener('mousedown', false);
+    canvas.addEventListener('mousedown', function (e) {
+      inicio.x = mouse.x;
+      inicio.y = mouse.y;
+    }, false);
+
+    canvas.removeEventListener('mouseup', false);
+    canvas.addEventListener('mouseup', function (e) {
+      fim.x = mouse.x;
+      fim.y = mouse.y;
+
+      bresenhamLinha(inicio, fim);
+    }, false);
+  });
+  // if (circulo.getAttribute('checked') === 'checked') {
+  $('#circulo').click(function () {
+
     canvas.addEventListener('mousemove', function (e) {
       mouse.x = e.pageX - this.offsetLeft;
       mouse.y = e.pageY - this.offsetTop;
@@ -30,15 +56,9 @@ function main() {
       fim.x = mouse.x;
       fim.y = mouse.y;
 
-      bresenhamLinha(inicio, fim);
+      bresenhamCirculo(inicio, fim);
     }, false);
-  }
-  else {
-    const circulo = document.getElementById('circulo');
-    if (circulo.getAttribute('checked') === 'checked') {
-      bresenhamCirculo();
-    }
-  }
+  });
 }
 
 function bresenhamLinha(inicio, fim) {
@@ -86,27 +106,21 @@ function bresenhamLinha(inicio, fim) {
   }
 }
 
-function bresenhamCirculo() {
-  canvas.addEventListener('mousemove', function (e) {
-    mouse.x = e.pageX - this.offsetLeft;
-    mouse.y = e.pageY - this.offsetTop;
-  }, false);
-  canvas.addEventListener('mousedown', function (e) {
-    inicio.x = e.pageX - this.offsetLeft;
-    inicio.y = e.pageY - this.offsetTop;
-  });
-  canvas.addEventListener('mouseup', function (e) {
-    fim.x = e.pageX - this.offsetLeft;
-    fim.y = e.pageY - this.offsetTop;
-    let raio = Math.sqrt(fim.x - inicio.x) + Math.sqrt(fim.y - inicio.y);
-    let i = 0, inc;
-    if (raio >= 1)
-      inc = 1 / raio;
-    else
-      inc = 1;
-    for (i; i < 360; i = i + inc) {
-      ctx.fillStyle = 'black';
-      ctx.fillRect(Math.round(raio * Math.cos(i)) + inicio.x, Math.round(raio * Math.sin(i)) + inicio.y, 1, 1);
-    }
-  });
+function bresenhamCirculo(inicio, fim) {
+  let raio = Math.sqrt(Math.pow(fim.x - inicio.x, 2) + Math.pow(fim.y - inicio.y, 2));
+  let i = 0, inc;
+  if (raio >= 1)
+    inc = 1 / raio;
+  else
+    inc = 1;
+  for (i; i < 360; i = i + inc) {
+    ctx.fillStyle = 'black';
+    ctx.fillRect(Math.round(raio * Math.cos(i)) + inicio.x, Math.round(raio * Math.sin(i)) + inicio.y, 1, 1);
+  }
+}
+
+function removeEvent(canvas) {
+  canvas.removeEventListener('mousemove', false);
+  canvas.removeEventListener('mouseup', false);
+  canvas.removeEventListener('mousedown', false);
 }
