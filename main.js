@@ -41,130 +41,49 @@ function main() {
   }
 }
 
-function bresenhamLinha(ponto1, ponto2) {
-  console.log(ponto1, ponto2);
-  var dx = Math.abs(ponto2.x - ponto1.x);
-  var dy = Math.abs(ponto2.y - ponto1.y);
-  var m = ponto2.x - ponto1.x / ponto2.y - ponto1.y;
+function bresenhamLinha(inicio, fim) {
+  // console.log(inicio, fim);
+  var dx = Math.abs(fim.x - inicio.x);
+  var dy = Math.abs(fim.y - inicio.y);
+  var m = (fim.y - inicio.y) / (fim.x - inicio.x);
 
-  var atual = ponto1;
+  var atual = { x: 0, y: 0 };
 
   if (dx > dy) { // reta mais horizontal
-    if (ponto1.x <= ponto2.x) { // esquerda para direita
-      while (atual.x <= ponto2.x) {
-        atual.y = m * (atual.x - ponto1.x) + ponto1.y;
+    atual.x = inicio.x;
+    if (inicio.x <= fim.x) { // esquerda para direita
+      while (atual.x <= fim.x) {
+        atual.y = parseInt((m * (atual.x - inicio.x)) + inicio.y);
         ctx.fillRect(atual.x, atual.y, 1, 1);
         atual.x++;
       }
     }
     else { // direita para esquerda
-      while (atual.x >= ponto2.x) {
-        atual.y = m * (atual.x - ponto1.x) + ponto1.y;
+      while (atual.x > fim.x) {
+        atual.y = parseInt((m * (atual.x - inicio.x)) + inicio.y);
         ctx.fillRect(atual.x, atual.y, 1, 1);
-        atual.x++;
+        atual.x--;
       }
     }
   }
+
   else { // reta mais vertical
-    if (ponto1.y <= ponto2.y) { // cima para baixo
-      while (atual.y <= ponto2.y) {
-        atual.x = ((atual.y - ponto2.y) / m) + ponto1.x;
+    atual.y = inicio.y;
+    if (inicio.y <= fim.y) { // cima para baixo
+      while (atual.y <= fim.y) {
+        atual.x = ((atual.y - inicio.y) / m) + inicio.x;
         ctx.fillRect(atual.x, atual.y, 1, 1);
         atual.y++;
       }
     }
     else {
-      while (atual.y >= ponto2.y) { // baixo para cima
-        atual.x = ((atual.y - ponto2.y) / m) + ponto1.x;
+      while (atual.y > fim.y) { // baixo para cima
+        atual.x = ((atual.y - inicio.y) / m) + inicio.x;
         ctx.fillRect(atual.x, atual.y, 1, 1);
         atual.y--;
       }
     }
   }
-
-
-  // var inclinacao = 0;
-
-  // if (dx < 0) // caso ponto final < ponto inicial
-  // {
-  //   var aux = ponto1;
-  //   ponto1 = ponto2;
-  //   ponto2 = aux;
-  // }
-  // if (dy < 0)
-  //   inclinacao = -1;
-  // else
-  //   inclinacao = 1;
-
-  // var d;
-  // var atual = ponto1;
-
-  // ctx.fillRect(atual.x, atual.y, 1, 1);
-  // if (dx >= inclinacao * dy) {    // m<=1
-  //   if (dy < 0) { // caso y2<y1
-  //     d = 2 * dy + dx;
-  //     while (atual.x < ponto2.x) {
-  //       if (d < 0) { // escolhido é o I
-  //         d += 2 * (dy + dx);
-  //         atual.x++;
-  //         atual.y--;
-  //       }
-  //       else { // escolhido é o S
-  //         d += 2 * dy;
-  //         atual.x++; // varia apenas no eixo x
-  //       }
-  //       ctx.fillRect(atual.x, atual.y, 1, 1);
-  //     }
-  //   }
-  //   else { // caso y1<y2
-  //     d = 2 * dy - dx;
-  //     while (atual.x < ponto2.x) {
-  //       if (d < 0) { // escolhido é o I
-  //         d += 2 * dy;
-  //         atual.x++; // varia apenas no eixo x
-  //       }
-  //       else { // escolhido é o S
-  //         d += 2 * (dy - dx);
-  //         atual.x++;
-  //         atual.y++;
-  //       }
-  //       ctx.fillRect(atual.x, atual.y, 1, 1);
-  //     }
-  //   }
-  // }
-  // else { // |m|>1
-  //   if (dy < 0) { // caso y2<y1
-  //     d = dy + 2 * dx;
-  //     while (atual.y > ponto2.y) {
-  //       if (d < 0) {
-  //         d += 2 * dx;
-  //         atual.y--; // varia apenas no eixo y
-  //       }
-  //       else {
-  //         d += 2 * (dy + dx);
-  //         atual.x++;
-  //         atual.y--;
-  //       }
-  //       ctx.fillRect(atual.x, atual.y, 1, 1);
-  //     }
-  //   }
-  //   else { // caso y1<y2
-  //     d = dy - 2 * dx;
-  //     while (atual.y < ponto2.y) {
-  //       if (d < 0) {
-  //         d += 2 * (dy - dx);
-  //         atual.x++;
-  //         atual.y++;
-  //       }
-  //       else {
-  //         d += -2 * dx;
-  //         atual.y++; // varia apenas no eixo y
-  //       }
-  //       ctx.fillRect(atual.x, atual.y, 1, 1);
-  //     }
-  //   }
-  // }
-  // ctx.fillRect(atual.x, atual.y, 1, 1);
 }
 
 function bresenhamCirculo() {
