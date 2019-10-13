@@ -5,9 +5,9 @@ var paint_style = getComputedStyle(painting);
 canvas.width = parseInt(paint_style.getPropertyValue('width'));
 canvas.height = parseInt(paint_style.getPropertyValue('height'));
 
+var mouse = { x: 0, y: 0 };
 var inicio = { x: 0, y: 0 };
 var fim = { x: 0, y: 0 };
-var mouse = { x: 0, y: 0 };
 
 function main() {
     canvas.addEventListener('mousemove', function (e) {
@@ -31,7 +31,7 @@ function main() {
 }
 
 function bresenhamLinha(inicio, fim){
-  // console.log(inicio, fim);
+  console.log(inicio, fim);
   var dx = Math.abs(fim.x - inicio.x);
   var dy = Math.abs(fim.y - inicio.y);
   var m = (fim.y - inicio.y) / (fim.x - inicio.x);
