@@ -10,9 +10,6 @@ var fim = { x: 0, y: 0 };
 var mouse = { x: 0, y: 0 };
 
 function main() {
-  // const reta = document.getElementById('reta');
-  // const circulo = document.getElementById('circulo');
-  // if (reta.getAttribute('checked') === 'checked') {
   $('#reta').click(function () {
 
     canvas.addEventListener('mousemove', function (e) {
@@ -30,7 +27,7 @@ function main() {
     canvas.removeEventListener('mouseup', circuloMouseUp, false);
     canvas.addEventListener('mouseup', retaMouseUp, false);
   });
-  // if (circulo.getAttribute('checked') === 'checked') {
+
   $('#circulo').click(function () {
 
     canvas.addEventListener('mousemove', function (e) {
