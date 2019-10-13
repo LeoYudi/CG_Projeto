@@ -16,22 +16,18 @@ var lim4 = { x: 0, y: 0 };
 var xmin, xmax, ymin, ymax;
 
 function main() {
-    canvas.addEventListener('mousemove', function (e) {
-      mouse.x = e.pageX - this.offsetLeft;
-      mouse.y = e.pageY - this.offsetTop;
-    }, false);
-
-    ctx.lineWidth = 1;
+  canvas.addEventListener('mousemove', function (e) {
+    mouse.x = e.pageX - this.offsetLeft;
+    mouse.y = e.pageY - this.offsetTop;
+  }, false);
+  ctx.lineWidth = 1;
 }
 
 function bresenhamLinha(inicio, fim){
-  console.log(inicio, fim);
   var dx = Math.abs(fim.x - inicio.x);
   var dy = Math.abs(fim.y - inicio.y);
   var m = (fim.y - inicio.y) / (fim.x - inicio.x);
-
   var atual = { x: 0, y: 0 };
-  
   if (dx > dy) { // reta mais horizontal
     atual.x = inicio.x;
     if (inicio.x <= fim.x) { // esquerda para direita
@@ -49,7 +45,6 @@ function bresenhamLinha(inicio, fim){
       }
     }
   }
-
   else { // reta mais vertical
     atual.y = inicio.y;
     if (inicio.y <= fim.y){ // cima para baixo
@@ -68,11 +63,6 @@ function bresenhamLinha(inicio, fim){
     }
   }
 }
-
-
-
-
-
 
 function janelaRecorte(){
   canvas.addEventListener('click', function limites() {
@@ -118,12 +108,11 @@ function janelaRecorte(){
 }
 
 function intercepta(ponto){
-  if(ponto.x >= xmin && ponto.x < xmax)
-    if(ponto.y >= ymin && ponto.y < ymax)
+  if(ponto.x >= xmin && ponto.x <= xmax)
+    if(ponto.y >= ymin && ponto.y <= ymax)
       return true;
   return false;
 }
-
 
 function criarCodigo(ponto) {
   var cod = ['0', '0', '0', '0'];
@@ -131,12 +120,10 @@ function criarCodigo(ponto) {
     cod[3] = '1';
   else if (ponto.x > xmax)
     cod[2] = '1';
-
   if (ponto.y < ymin)
     cod[1] = '1';
   else if(ponto.y > ymax)
     cod[0] = '1';
-
   return cod;
 }
 
@@ -148,6 +135,48 @@ function and(cod1, cod2){
   return cod;
 }
 
+function tratarDiagonais(cod, flag) {
+  var pos = [];
+  var pos1, pos2;
+  var intercp1 = { x: 0, y: 0 };
+  var intercp2 = { x: 0, y: 0 };
+  for (var i=0; i<4; i++){
+    if(cod[i] == '1')
+      pos.push(i);
+  }
+  if(pos.length == 1) // nao termina em diagonal
+    return flag;
+  else {
+    pos2 = pos.pop(); // flag esq ou dir
+    pos1 = pos.pop(); // flag cima ou baixo
+    console.log(pos1, pos2);
+    var m = (fim.y - inicio.y) / (fim.x - inicio.x);
+    if(pos1 == 0){ //cima
+      console.log("interc cima");
+      intercp1.y = ymax;
+      intercp1.x = (1 / m) * (ymax - inicio.y) + inicio.x;
+    }
+    else { //baixo
+      console.log("interc baixo");
+      intercp1.y = ymin;
+      intercp1.x = (1 / m) * (ymin - inicio.y) + inicio.x;
+    }
+    if(pos2 == 2){ //dir
+      console.log("interc dir");
+      intercp2.x = xmax;
+      intercp2.y = m * (xmax - inicio.x) + inicio.y;
+    }
+    else { //esq
+      console.log("interc esq");
+      intercp2.x = xmin;
+      intercp2.y = m * (xmin - inicio.x) + inicio.y;
+    }
+    // intercepta nos limites y
+    if(intercepta(intercp1)) return pos1;
+    // intercepta nos limites x
+    else return pos2;
+  }
+}
 
 function janelaLinha() {
   var cod1 = criarCodigo(inicio);
@@ -165,17 +194,17 @@ function janelaLinha() {
     var esq = { x: xmin, y: 0 };
     var dir = { x: xmax, y: 0 };
     var m = (fim.y - inicio.y) / (fim.x - inicio.x);
-    
     var p1 = undefined; 
     var p2 = undefined;
-    
     var i;
-    if (cod1.join('') == '0000') { 
+    if (cod1.join('') == '0000') {
       i = cod2.indexOf('1');
       p1 = inicio;
+      i = tratarDiagonais(cod2, i); 
     } else if (cod2.join('') == '0000') {
       i = cod1.indexOf('1');
       p1 = fim;
+      i = tratarDiagonais(cod1, i); 
     }
     // linha com um ponto dentro da janela
     if(p1) {
@@ -205,34 +234,21 @@ function janelaLinha() {
       baixo.x = (1/m)*(ymin-inicio.y) + inicio.x;
       esq.y = m*(xmin-inicio.x) + inicio.y;
       dir.y = m*(xmax-inicio.x) + inicio.y;
-      
       if(intercepta(cima)){
-        console.log(xmin, xmax);
-        console.log('cima', cima);
         p1 = cima;
       }
-
       if(intercepta(baixo)){
-        console.log(xmin, xmax);
-        console.log('baixo', baixo);
         if(p1) p2 = baixo;
         else p1 = baixo;
       }
-      
       if(intercepta(esq)){
-        console.log(ymin, ymax);
-        console.log('esq', esq);
         if(p1) p2 = esq;
         else p1 = esq;
       }
-      
       if(intercepta(dir)){
-        console.log(ymin, ymax);
-        console.log('dir', dir);
         if(p1) p2 = dir;
         else p1 = dir;
       }
-      
       bresenhamLinha(p1, p2);
     }
   }
