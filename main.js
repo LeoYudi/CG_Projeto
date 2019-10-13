@@ -15,7 +15,6 @@ function main() {
   // if (reta.getAttribute('checked') === 'checked') {
   $('#reta').click(function () {
 
-    canvas.removeEventListener('mousemove', false);
     canvas.addEventListener('mousemove', function (e) {
       mouse.x = e.pageX - this.offsetLeft;
       mouse.y = e.pageY - this.offsetTop;
@@ -23,19 +22,13 @@ function main() {
 
     ctx.lineWidth = 1;
 
-    canvas.removeEventListener('mousedown', false);
     canvas.addEventListener('mousedown', function (e) {
       inicio.x = mouse.x;
       inicio.y = mouse.y;
     }, false);
 
-    canvas.removeEventListener('mouseup', false);
-    canvas.addEventListener('mouseup', function (e) {
-      fim.x = mouse.x;
-      fim.y = mouse.y;
-
-      bresenhamLinha(inicio, fim);
-    }, false);
+    canvas.removeEventListener('mouseup', circuloMouseUp, false);
+    canvas.addEventListener('mouseup', retaMouseUp, false);
   });
   // if (circulo.getAttribute('checked') === 'checked') {
   $('#circulo').click(function () {
@@ -52,12 +45,8 @@ function main() {
       inicio.y = mouse.y;
     }, false);
 
-    canvas.addEventListener('mouseup', function (e) {
-      fim.x = mouse.x;
-      fim.y = mouse.y;
-
-      bresenhamCirculo(inicio, fim);
-    }, false);
+    canvas.removeEventListener('mouseup', retaMouseUp, false);
+    canvas.addEventListener('mouseup', circuloMouseUp, false);
   });
 }
 
@@ -119,8 +108,16 @@ function bresenhamCirculo(inicio, fim) {
   }
 }
 
-function removeEvent(canvas) {
-  canvas.removeEventListener('mousemove', false);
-  canvas.removeEventListener('mouseup', false);
-  canvas.removeEventListener('mousedown', false);
+function circuloMouseUp(e) {
+  fim.x = mouse.x;
+  fim.y = mouse.y;
+
+  bresenhamCirculo(inicio, fim);
+}
+
+function retaMouseUp(e) {
+  fim.x = mouse.x;
+  fim.y = mouse.y;
+
+  bresenhamLinha(inicio, fim);
 }
