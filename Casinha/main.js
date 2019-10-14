@@ -203,3 +203,16 @@ function limpa() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.restore();
 }
+
+function transformacoes() {
+  var t1 = document.getElementById('t1');
+  var t2 = document.getElementById('t2');
+  var t3 = document.getElementById('t3');
+  var e1 = document.getElementById('e1');
+  var e2 = document.getElementById('e2');
+  var e3 = document.getElementById('e3');
+  var r = document.getElementById('r');
+  obj = escala(e1.value, e2.value, e3.value);
+  console.log(obj);
+  main();
+}

@@ -19,6 +19,19 @@
     <input type="radio" id="cav" name="projec" onclick="main()">
     <label for="cav">Projeção cavaleira</label>
   </div>
+  <div>
+    <h3>Translação</h3>
+    <input type="text" id="t1" placeholder="Eixo X">
+    <input type="text" id="t2" placeholder="Eixo Y">
+    <input type="text" id="t3" placeholder="Eixo Z">
+    <h3>Escala</h3>
+    <input type="text" id="e1" placeholder="Eixo X">
+    <input type="text" id="e2" placeholder="Eixo Y">
+    <input type="text" id="e3" placeholder="Eixo Z">
+    <h3>Rotação</h3>
+    <input type="text" id="r" placeholder="Radianos">
+    <button onclick="transformacoes()">Modificar</button>
+  </div>
   <div id="paint">
     <canvas id="canvas" height="500px" width="500px" style="border: 1px solid black; margin-top: 5px;"></canvas>
   </div>
