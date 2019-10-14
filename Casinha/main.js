@@ -108,47 +108,47 @@ function multiPontoMatriz(ponto, matriz2) {
   return result;
 }
 
-function translacao(dx, dy, dz) {
+function translacao(dx, dy, dz, pontos) {
   let novoObj = [[]];
   let matrizTransf = [[1, 0, 0, dx], [0, 1, 0, dy], [0, 0, 1, dz], [0, 0, 0, 1]];
-  for (let i = 0; i < obj.pontos; i++) {
-    novoObj[i] = multiPontoMatriz(obj.pontos[i], matrizTransf);
+  for (let i = 0; i < pontos.length; i++) {
+    novoObj[i] = multiPontoMatriz(pontos[i], matrizTransf);
   }
   return novoObj;
 }
 
-function rotacaoX(rad) {
+function rotacaoX(rad, pontos) {
   let novoObj = [[]];
   let matrizTransf = [[1, 0, 0, 0], [0, Math.cos(rad), -Math.sin(rad), 0], [0, Math.sin(rad), Math.cos(rad), 0], [0, 0, 0, 1]];
-  for (let i = 0; i < obj.pontos; i++) {
-    novoObj[i] = multiPontoMatriz(obj.pontos[i], matrizTransf);
+  for (let i = 0; i < pontos.length; i++) {
+    novoObj[i] = multiPontoMatriz(pontos[i], matrizTransf);
   }
   return novoObj;
 }
 
-function rotacaoY(rad) {
+function rotacaoY(rad, pontos) {
   let novoObj = [[]];
   let matrizTransf = [[Math.cos(rad), 0, Math.sin(rad), 0], [0, 1, 0, 0], [-Math.sin(rad), 0, Math.cos(rad), 0], [0, 0, 0, 1]];
-  for (let i = 0; i < obj.pontos; i++) {
-    novoObj[i] = multiPontoMatriz(obj.pontos[i], matrizTransf);
+  for (let i = 0; i < pontos.length; i++) {
+    novoObj[i] = multiPontoMatriz(pontos[i], matrizTransf);
   }
   return novoObj;
 }
 
-function rotacaoZ(rad) {
+function rotacaoZ(rad, pontos) {
   let novoObj = [[]];
   let matrizTransf = [[Math.cos(rad), -Math.sin(rad), 0, 0], [Math.sin(rad), Math.cos(rad), 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
-  for (let i = 0; i < obj.pontos; i++) {
-    novoObj[i] = multiPontoMatriz(obj.pontos[i], matrizTransf);
+  for (let i = 0; i < pontos.length; i++) {
+    novoObj[i] = multiPontoMatriz(pontos[i], matrizTransf);
   }
   return novoObj;
 }
 
-function escala(dx, dy, dz) {
+function escala(dx, dy, dz, pontos) {
   let novoObj = [[]];
   let matrizTransf = [[dx, 0, 0, 0], [0, dy, 0, 0], [0, 0, dz, 0]];
-  for (let i = 0; i < obj.pontos; i++) {
-    novoObj[i] = multiPontoMatriz(obj.pontos[i], matrizTransf);
+  for (let i = 0; i < pontos.length; i++) {
+    novoObj[i] = multiPontoMatriz(pontos[i], matrizTransf);
   }
   return novoObj;
 }
