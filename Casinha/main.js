@@ -58,16 +58,16 @@ function main() {
   else if (cav.checked == true)
     proj = projCavaleira(obj);
   for (let i = 0; i < obj.retas.length; i++) {
-    inicio.x = proj[obj.retas[i][0] + 1][0][0];
-    inicio.y = proj[obj.retas[i][0] + 1][0][1];
-    fim.x = proj[obj.retas[i][1] + 1][0][0];
-    fim.y = proj[obj.retas[i][1] + 1][0][1];
+    inicio.x = proj[obj.retas[i][0] + 1][0];
+    inicio.y = proj[obj.retas[i][0] + 1][1];
+    fim.x = proj[obj.retas[i][1] + 1][0];
+    fim.y = proj[obj.retas[i][1] + 1][1];
     bresenhamLinha(inicio, fim);
   }
 }
 
 function projecao(obj) {
-  projecaoPontos = [[]];
+  let projecaoPontos = [[]];
   let i;
   let matrizProj = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 1]];
   for (i = 0; i < obj.pontos.length; i++) {
@@ -97,12 +97,12 @@ function projCabinet(obj) {
 }
 
 function multiPontoMatriz(ponto, matriz2) {
-  let result = [[]];
+  let result = [];
   aux = 0;
   for (j = 0; j < matriz2[0].length; j++) {
-    result[0][j] = 0;
+    result[j] = 0;
     for (k = 0; k < matriz2.length; k++) {
-      result[0][j] += ponto[k] * matriz2[k][j];
+      result[j] += ponto[k] * matriz2[k][j];
     }
   }
   return result;
@@ -212,7 +212,8 @@ function transformacoes() {
   var e2 = document.getElementById('e2');
   var e3 = document.getElementById('e3');
   var r = document.getElementById('r');
-  obj = escala(e1.value, e2.value, e3.value);
-  console.log(obj);
+  // obj.pontos = translacao(t1.value, t2.value, t3.value, obj.pontos);
+  // obj.pontos = rotacaoZ(r.value, obj.pontos);
+  obj.pontos = escala(e1.value, e2.value, e3.value, obj.pontos);
   main();
 }
