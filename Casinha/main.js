@@ -23,13 +23,13 @@ var obj = {
   ],
   retas: [
     [0, 1],
-    [1, 2],
+    [1, 3],
     [2, 3],
-    [3, 0],
+    [2, 0],
     [4, 5],
-    [5, 6],
+    [5, 7],
     [6, 7],
-    [7, 4],
+    [6, 4],
     [0, 4],
     [1, 5],
     [2, 6],
@@ -44,14 +44,15 @@ var obj = {
 
 function main() {
   let proj = projecao(obj);
-  // projCabinet(obj);
-  // projCavaleira(obj);
+  // let proj = projCabinet(obj);
+  // let proj = projCavaleira(obj);
 
   for (let i = 0; i < obj.retas.length; i++) {
-    inicio.x = proj[obj.retas[i][0] + 1][0][1];
-    inicio.y = proj[obj.retas[i][0] + 1][0][2];
-    inicio.x = proj[obj.retas[i][1] + 1][0][1];
-    inicio.y = proj[obj.retas[i][1] + 1][0][2];
+    inicio.x = proj[obj.retas[i][0] + 1][0][0];
+    inicio.y = proj[obj.retas[i][0] + 1][0][1];
+    fim.x = proj[obj.retas[i][1] + 1][0][0];
+    fim.y = proj[obj.retas[i][1] + 1][0][1];
+    console.log(inicio, fim);
     bresenhamLinha(inicio, fim);
   }
 }
