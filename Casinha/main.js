@@ -4,6 +4,12 @@ var painting = document.getElementById('paint');
 var paint_style = getComputedStyle(painting);
 canvas.width = parseInt(paint_style.getPropertyValue('width'));
 canvas.height = parseInt(paint_style.getPropertyValue('height'));
+var ort = document.getElementById('ort');
+var cab = document.getElementById('cab');
+var cav = document.getElementById('cav');
+
+var inicio = { x: 0, y: 0 };
+var fim = { x: 0, y: 0 };
 
 var inicio = { x: 0, y: 0 };
 var fim = { x: 0, y: 0 };
@@ -43,10 +49,14 @@ var obj = {
 };
 
 function main() {
-  // let proj = projecao(obj);
-  let proj = projCabinet(obj);
-  // let proj = projCavaleira(obj);
-
+  limpa();
+  let proj;
+  if (ort.checked == true)
+    proj = projecao(obj);
+  else if (cab.checked == true)
+    proj = projCabinet(obj);
+  else if (cav.checked == true)
+    proj = projCavaleira(obj);
   for (let i = 0; i < obj.retas.length; i++) {
     inicio.x = proj[obj.retas[i][0] + 1][0][0];
     inicio.y = proj[obj.retas[i][0] + 1][0][1];
@@ -61,7 +71,6 @@ function projecao(obj) {
   let i;
   let matrizProj = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 1]];
   for (i = 0; i < obj.pontos.length; i++) {
-    // console.log(multiMatriz(obj.pontos[i]), matrizProj);
     projecaoPontos.push(multiPontoMatriz(obj.pontos[i], matrizProj));
   }
   return projecaoPontos;
@@ -187,14 +196,10 @@ function bresenhamLinha(inicio, fim) {
     }
   }
 }
-/*
-100, 100, 100
-200, 100, 100
-100, 200, 100
-200, 200, 100
-100, 100, 200
-200, 100, 200
-100, 200, 200
-200, 200, 200
-150, 100, 250
-150, 200, 250 */
+
+function limpa() {
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.restore();
+}
