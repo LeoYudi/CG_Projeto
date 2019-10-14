@@ -7,10 +7,18 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!--JQUERY-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <title>Bresenham</title>
+  <title>Casinha</title>
 </head>
 
 <body onload="main()">
+  <div>
+    <input type="radio" id="ort" name="projec" onclick="main()" checked>
+    <label for="ort">Projeção ortogonal</label>
+    <input type="radio" id="cab" name="projec" onclick="main()">
+    <label for="cab">Projeção cabinet</label>
+    <input type="radio" id="cav" name="projec" onclick="main()">
+    <label for="cav">Projeção cavaleira</label>
+  </div>
   <div id="paint">
     <canvas id="canvas" height="500px" width="500px" style="border: 1px solid black; margin-top: 5px;"></canvas>
   </div>
