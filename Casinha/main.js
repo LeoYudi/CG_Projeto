@@ -8,6 +8,8 @@ var ort = document.getElementById('ort');
 var cab = document.getElementById('cab');
 var cav = document.getElementById('cav');
 
+var inicio = { x: 0, y: 0 };
+var fim = { x: 0, y: 0 };
 
 var inicio = { x: 0, y: 0 };
 var fim = { x: 0, y: 0 };
@@ -49,11 +51,11 @@ var obj = {
 function main() {
   limpa();
   let proj;
-  if(ort.checked == true)
-    proj = projecao(obj); 
-  else if(cab.checked == true)
+  if (ort.checked == true)
+    proj = projecao(obj);
+  else if (cab.checked == true)
     proj = projCabinet(obj);
-  else if(cav.checked == true)
+  else if (cav.checked == true)
     proj = projCavaleira(obj);
   for (let i = 0; i < obj.retas.length; i++) {
     inicio.x = proj[obj.retas[i][0] + 1][0][0];
@@ -69,7 +71,7 @@ function projecao(obj) {
   let i;
   let matrizProj = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 1]];
   for (i = 0; i < obj.pontos.length; i++) {
-    projecaoPontos.push(multiMatriz(obj.pontos[i], matrizProj));
+    projecaoPontos.push(multiPontoMatriz(obj.pontos[i], matrizProj));
   }
   return projecaoPontos;
 }
@@ -79,7 +81,7 @@ function projCavaleira(obj) {
   let i;
   let matrizProj = [[1, 0, 0, 0], [0, 1, 0, 0], [Math.sqrt(2) / 2, Math.sqrt(2) / 2, 0, 0], [0, 0, 0, 1]];
   for (i = 0; i < obj.pontos.length; i++) {
-    projecaoPontos.push(multiMatriz(obj.pontos[i], matrizProj));
+    projecaoPontos.push(multiPontoMatriz(obj.pontos[i], matrizProj));
   }
   return projecaoPontos;
 }
@@ -89,21 +91,66 @@ function projCabinet(obj) {
   let i;
   let matrizProj = [[1, 0, 0, 0], [0, 1, 0, 0], [0.4477 / 2, 0.8941 / 2, 0, 0], [0, 0, 0, 1]];
   for (i = 0; i < obj.pontos.length; i++) {
-    projecaoPontos.push(multiMatriz(obj.pontos[i], matrizProj));
+    projecaoPontos.push(multiPontoMatriz(obj.pontos[i], matrizProj));
   }
   return projecaoPontos;
 }
 
-function multiMatriz(matriz1, matriz2) {
+function multiPontoMatriz(ponto, matriz2) {
   let result = [[]];
   aux = 0;
   for (j = 0; j < matriz2[0].length; j++) {
     result[0][j] = 0;
     for (k = 0; k < matriz2.length; k++) {
-      result[0][j] += matriz1[k] * matriz2[k][j];
+      result[0][j] += ponto[k] * matriz2[k][j];
     }
   }
   return result;
+}
+
+function translacao(dx, dy, dz, pontos) {
+  let novoObj = [[]];
+  let matrizTransf = [[1, 0, 0, dx], [0, 1, 0, dy], [0, 0, 1, dz], [0, 0, 0, 1]];
+  for (let i = 0; i < pontos.length; i++) {
+    novoObj[i] = multiPontoMatriz(pontos[i], matrizTransf);
+  }
+  return novoObj;
+}
+
+function rotacaoX(rad, pontos) {
+  let novoObj = [[]];
+  let matrizTransf = [[1, 0, 0, 0], [0, Math.cos(rad), -Math.sin(rad), 0], [0, Math.sin(rad), Math.cos(rad), 0], [0, 0, 0, 1]];
+  for (let i = 0; i < pontos.length; i++) {
+    novoObj[i] = multiPontoMatriz(pontos[i], matrizTransf);
+  }
+  return novoObj;
+}
+
+function rotacaoY(rad, pontos) {
+  let novoObj = [[]];
+  let matrizTransf = [[Math.cos(rad), 0, Math.sin(rad), 0], [0, 1, 0, 0], [-Math.sin(rad), 0, Math.cos(rad), 0], [0, 0, 0, 1]];
+  for (let i = 0; i < pontos.length; i++) {
+    novoObj[i] = multiPontoMatriz(pontos[i], matrizTransf);
+  }
+  return novoObj;
+}
+
+function rotacaoZ(rad, pontos) {
+  let novoObj = [[]];
+  let matrizTransf = [[Math.cos(rad), -Math.sin(rad), 0, 0], [Math.sin(rad), Math.cos(rad), 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
+  for (let i = 0; i < pontos.length; i++) {
+    novoObj[i] = multiPontoMatriz(pontos[i], matrizTransf);
+  }
+  return novoObj;
+}
+
+function escala(dx, dy, dz, pontos) {
+  let novoObj = [[]];
+  let matrizTransf = [[dx, 0, 0, 0], [0, dy, 0, 0], [0, 0, dz, 0]];
+  for (let i = 0; i < pontos.length; i++) {
+    novoObj[i] = multiPontoMatriz(pontos[i], matrizTransf);
+  }
+  return novoObj;
 }
 
 function bresenhamLinha(inicio, fim) {
@@ -150,10 +197,22 @@ function bresenhamLinha(inicio, fim) {
   }
 }
 
-
-function limpa(){
+function limpa() {
   ctx.save();
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.restore();
+}
+
+function transformacoes() {
+  var t1 = document.getElementById('t1');
+  var t2 = document.getElementById('t2');
+  var t3 = document.getElementById('t3');
+  var e1 = document.getElementById('e1');
+  var e2 = document.getElementById('e2');
+  var e3 = document.getElementById('e3');
+  var r = document.getElementById('r');
+  obj = escala(e1.value, e2.value, e3.value);
+  console.log(obj);
+  main();
 }
