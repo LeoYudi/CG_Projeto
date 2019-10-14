@@ -47,12 +47,11 @@ function main() {
   // projCabinet(obj);
   // projCavaleira(obj);
 
-
-  for (i = 0; i < obj.retas.length; i++) {
-    inicio.x = proj[obj.retas[i][1]][1];
-    inicio.y = proj[obj.retas[i][1]][2];
-    inicio.x = proj[obj.retas[i][2]][1];
-    inicio.y = proj[obj.retas[i][2]][2];
+  for (let i = 0; i < obj.retas.length; i++) {
+    inicio.x = proj[obj.retas[i][0] + 1][0][1];
+    inicio.y = proj[obj.retas[i][0] + 1][0][2];
+    inicio.x = proj[obj.retas[i][1] + 1][0][1];
+    inicio.y = proj[obj.retas[i][1] + 1][0][2];
     bresenhamLinha(inicio, fim);
   }
 }
@@ -62,7 +61,8 @@ function projecao(obj) {
   let i;
   let matrizProj = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 1]];
   for (i = 0; i < obj.pontos.length; i++) {
-    projecaoPontos.push(multiMatriz(obj.pontos[i]), matrizProj);
+    // console.log(multiMatriz(obj.pontos[i]), matrizProj);
+    projecaoPontos.push(multiMatriz(obj.pontos[i], matrizProj));
   }
   return projecaoPontos;
 }
@@ -72,7 +72,7 @@ function projCavaleira(obj) {
   let i;
   let matrizProj = [[1, 0, 0, 0], [0, 1, 0, 0], [Math.sqrt(2) / 2, Math.sqrt(2) / 2, 0, 0], [0, 0, 0, 1]];
   for (i = 0; i < obj.pontos.length; i++) {
-    projecaoPontos.push(multiMatriz(obj.pontos[i]), matrizProj);
+    projecaoPontos.push(multiMatriz(obj.pontos[i], matrizProj));
   }
   return projecaoPontos;
 }
@@ -82,23 +82,24 @@ function projCabinet(obj) {
   let i;
   let matrizProj = [[1, 0, 0, 0], [0, 1, 0, 0], [0.4477 / 2, 0.8941 / 2, 0, 0], [0, 0, 0, 1]];
   for (i = 0; i < obj.pontos.length; i++) {
-    projecaoPontos.push(multiMatriz(obj.pontos[i]), matrizProj);
+    projecaoPontos.push(multiMatriz(obj.pontos[i], matrizProj));
   }
   return projecaoPontos;
 }
 
 function multiMatriz(matriz1, matriz2) {
   let result = [[]];
-  for (i = 0; i < matriz1.length; i++) {
-    for (j = 0; j < matriz1[i].length; j++) {
-      result[i][j] += matriz1[i][j] * matriz2[j][i];
+  aux = 0;
+  for (j = 0; j < matriz2[0].length; j++) {
+    result[0][j] = 0;
+    for (k = 0; k < matriz2.length; k++) {
+      result[0][j] += matriz1[k] * matriz2[k][j];
     }
   }
   return result;
 }
 
 function bresenhamLinha(inicio, fim) {
-  // console.log(inicio, fim);
   var dx = Math.abs(fim.x - inicio.x);
   var dy = Math.abs(fim.y - inicio.y);
   var m = (fim.y - inicio.y) / (fim.x - inicio.x);
