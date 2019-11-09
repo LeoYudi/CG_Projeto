@@ -11,9 +11,6 @@ var cav = document.getElementById('cav');
 var inicio = { x: 0, y: 0 };
 var fim = { x: 0, y: 0 };
 
-var inicio = { x: 0, y: 0 };
-var fim = { x: 0, y: 0 };
-
 var obj = {
   pontos: [
     [100, 100, 100, 1],
