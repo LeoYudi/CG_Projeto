@@ -21,6 +21,7 @@ function main() {
 
 function printa(pontos) {
   for (let i = 0; i < pontos.length; i++) {
+    ctx.fillStyle = 'purple';
     ctx.fillRect(pontos[i][0] + 500, pontos[i][1] + 200, 1, 1);
   }
 }
