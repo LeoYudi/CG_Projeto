@@ -7,8 +7,12 @@ canvas.height = parseInt(paint_style.getPropertyValue('height'));
 
 var esfera = {
   centro: [200, 500],
-  pontos: [[]],
+  pontos: [],
   raio: 50
+}
+
+var plano = {
+
 }
 
 function main() {
@@ -27,15 +31,14 @@ function printa(pontos) {
 }
 
 function pontosEsfera() {
-  i = 0;
-  for (let a = -Math.PI / 2; a < Math.PI / 2; a += 0.03) {
-    for (let b = -Math.PI; b < Math.PI; b += 0.03) {
+  for (let a = -Math.PI / 2; a < Math.PI / 2; a += 0.2) {
+    for (let b = -Math.PI; b < Math.PI; b += 0.2) {
       let coord = [];
       coord[0] = esfera.raio * Math.cos(a) * Math.cos(b);
       coord[1] = esfera.raio * Math.cos(a) * Math.sin(b);
       coord[2] = esfera.raio * Math.sin(a);
       coord[3] = 1;
-      esfera.pontos[i++] = coord;
+      esfera.pontos.push(coord);
     }
   }
 }
