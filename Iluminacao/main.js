@@ -8,45 +8,82 @@ canvas.height = parseInt(paint_style.getPropertyValue('height'));
 var esfera = {
   centro: [200, 500],
   pontos: [],
-  raio: 50
+  raio: 50,
+  cor: 'magenta'
 }
 
 var plano = {
   inicio: [0, 0, 0],
   fim: [100, 100, 0],
-  pontos: []
+  pontos: [],
+  cor: 'blue'
 }
+
+var zbuffer = [];
 
 function main() {
   pontosEsfera();
   pontosPlano();
-  printa(plano.pontos, 'blue');
-  printa(esfera.pontos, 'magenta');
-}
-
-function printa(pontos, cor) {
-  for (let i = 0; i < pontos.length; i++) {
-    ctx.fillStyle = cor;
-    ctx.fillRect(pontos[i][0] + 500, pontos[i][1] + 200, 1, 1);
-  }
+  inicializaZbuffer();
+  console.log(plano);
+  // printa(plano.pontos, plano.cor);
+  // printa(esfera.pontos, esfera.cor);
+  comparaZbuffer(esfera);
+  comparaZbuffer(plano);
+  printaZbuffer();
 }
 
 function pontosEsfera() {
   for (let a = -Math.PI / 2; a < Math.PI / 2; a += 0.02) {
     for (let b = -Math.PI; b < Math.PI; b += 0.02) {
-      let coord = [];
-      coord[0] = esfera.raio * Math.cos(a) * Math.cos(b);
-      coord[1] = esfera.raio * Math.cos(a) * Math.sin(b);
-      coord[2] = esfera.raio * Math.sin(a);
+      let coord = { x: 0, y: 0, z: 0 };
+      coord.x = Math.round(esfera.raio * Math.cos(a) * Math.cos(b) + canvas.width / 2);
+      coord.y = Math.round(esfera.raio * Math.cos(a) * Math.sin(b) + canvas.height / 2);
+      coord.z = Math.round(esfera.raio * Math.sin(a));
       esfera.pontos.push(coord);
     }
   }
 }
 
 function pontosPlano() {
-  for (let i = plano.inicio[0]; i < plano.fim[0]; i += 0.1)
-    for (let j = plano.inicio[1]; j < plano.fim[1]; j += 0.1)
-      plano.pontos.push([i, j, 0]);
+  for (let i = plano.inicio[0]; i < plano.fim[0]; i++)
+    for (let j = plano.inicio[1]; j < plano.fim[1]; j++)
+      plano.pontos.push({ x: Math.round(i + canvas.width / 2), y: Math.round(j + canvas.height / 2), z: 0 });
+}
+
+function inicializaZbuffer() {
+  for (let x = 0; x < canvas.width; x++) {
+    zbuffer[x] = [];
+    for (let y = 0; y < canvas.height; y++) {
+      zbuffer[x][y] = { zmax: Infinity, cor: 'black' };
+    }
+  }
+}
+
+function comparaZbuffer(obj) {
+  for (let i = 0; i < obj.pontos.length; i++) {
+    if (obj.pontos[i].z < zbuffer[obj.pontos[i].x][obj.pontos[i].y].zmax) {
+      zbuffer[obj.pontos[i].x][obj.pontos[i].y].zmax = obj.pontos[i].z;
+      zbuffer[obj.pontos[i].x][obj.pontos[i].y].cor = obj.cor;
+    }
+  }
+}
+
+function printa(pontos, cor) {
+  ctx.fillStyle = cor;
+  for (let i = 0; i < pontos.length; i++) {
+    ctx.fillRect(pontos[i].x, pontos[i].y, 1, 1);
+  }
+}
+
+function printaZbuffer() {
+  for (let x = 0; x < zbuffer.length; x++) {
+    for (let y = 0; y < zbuffer[0].length; y++) {
+      ctx.fillStyle = zbuffer[x][y].cor;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+  ctx.fillStyle = 'black';
 }
 
 // function multiPontoMatriz(ponto, matriz) {
