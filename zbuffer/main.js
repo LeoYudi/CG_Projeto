@@ -26,9 +26,97 @@ var obj4 = {
 };
 
 var obj5 = {
-  cor: 'branco',
+  cor: 'white',
   pontos: []
 };
+
+var centro = {
+  x: parseInt(canvas.width / 2),
+  y: parseInt(canvas.height / 2)
+}
+
+var zbuffer = [];
+
+function main() {
+  pontosObj1();
+  pontosObj2();
+  pontosObj3();
+  pontosObj4();
+  pontosObj5();
+  inicializaZbuffer();
+  comparaZbuffer(obj1);
+  comparaZbuffer(obj2);
+  comparaZbuffer(obj3);
+  comparaZbuffer(obj4);
+  comparaZbuffer(obj5);
+  printaZbuffer();
+}
+
+function pontosObj1() {
+  for (let x = 10; x < 30; x++) {
+    for (let y = 20; y < 40; y++) {
+      let ponto = {
+        x: x,
+        y: y,
+        z: x ** 2 + y
+      };
+      obj1.pontos.push(ponto);
+    }
+  }
+}
+
+function pontosObj2() {
+  for (let x = 50; x < 100; x++) {
+    for (let y = 30; y < 80; y++) {
+      let ponto = {
+        x: x,
+        y: y,
+        z: 3 * x - 2 * y + 5
+      }
+      obj2.pontos.push(ponto);
+    }
+  }
+}
+
+function pontosObj3() {
+  for (let t = 0; t < 50; t++) {
+    for (let alfa = 0; alfa < Math.PI * 2; alfa += 0.12) {
+      let ponto = {
+        x: 30 + t * parseInt(Math.cos(alfa)),
+        y: 50 + t * parseInt(Math.sin(alfa)),
+        z: 10 * t
+      }
+      obj3.pontos.push(ponto);
+    }
+  }
+}
+
+function pontosObj4() {
+  for (let alfa = 0; alfa < 2 * Math.PI; alfa += 0.12) {
+    for (let beta = 0; beta < 2 * Math.PI; beta += 0.12) {
+      let ponto = {
+        x: 100 + 30 * parseInt(Math.cos(alfa) * Math.cos(beta)),
+        y: 50 + 30 * parseInt(Math.cos(alfa) * Math.sin(beta)),
+        z: 20 + 30 * parseInt(Math.sin(alfa))
+      }
+    }
+  }
+}
+
+function pontosObj5() {
+  for (let x = -20; x < 20; x++) {
+    for (let y = -20; y < 20; y++) {
+      for (let z = -20; z < 20; z++) {
+        let ponto = {
+          x: x,
+          y: y,
+          z: z
+        }
+        obj5.pontos.push(ponto);
+      }
+    }
+  }
+}
 
 function inicializaZbuffer() {
   for (let x = 0; x < canvas.width; x++) {
@@ -40,13 +128,15 @@ function inicializaZbuffer() {
 }
 
 function comparaZbuffer(obj) {
-  let novaCor = [];
   for (let i = 0; i < obj.pontos.length; i++) {
-    if (obj.pontos[i].z > zbuffer[obj.pontos[i].x][obj.pontos[i].y].zmax) {
-      zbuffer[obj.pontos[i].x][obj.pontos[i].y].zmax = obj.pontos[i].z;
-      // novaCor = iluminaçãoPonto(obj.pontos[i], obj.cor);
-      novaCor = iluminaçãoPontoEspecular(obj.pontos[i], obj.cor);
-      zbuffer[obj.pontos[i].x][obj.pontos[i].y].cor = `RGB(${novaCor[0]}, ${novaCor[1]}, ${novaCor[2]})`;
+    let ponto = {
+      x: obj.pontos[i].x,
+      y: obj.pontos[i].y,
+      z: obj.pontos[i].z
+    };
+    if (ponto.z > zbuffer[ponto.x + centro.x][ponto.y + centro.y].zmax) {
+      zbuffer[ponto.x + centro.x][ponto.y + centro.y].zmax = ponto.z;
+      zbuffer[ponto.x + centro.x][ponto.y + centro.y].cor = obj.cor;
     }
   }
 }
@@ -56,9 +146,6 @@ function printaZbuffer() {
     for (let y = 0; y < zbuffer[0].length; y++) {
       ctx.fillStyle = zbuffer[x][y].cor;
       ctx.fillRect(x, y, 1, 1);
-      if (zbuffer[x][y].cor !== 'black') {
-
-      }
     }
   }
   ctx.fillStyle = 'black';
