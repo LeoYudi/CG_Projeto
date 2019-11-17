@@ -79,12 +79,12 @@ function pontosObj2() {
 }
 
 function pontosObj3() {
-  for (let t = 0; t < 50; t++) {
-    for (let alfa = 0; alfa < Math.PI * 2; alfa += 0.01) {
+  for (let alfa = 0; alfa < Math.PI * 2; alfa += 0.01) {
+    for (let t = 0; t < 50; t++) {
       let ponto = {
-        x: 30 + t * Math.round(Math.cos(alfa)),
-        y: 50 + t * Math.round(Math.sin(alfa)),
-        z: 10 * t
+        x: parseInt(30 + t * Math.cos(alfa)),
+        y: parseInt(50 + t * Math.sin(alfa)),
+        z: parseInt(10 * t)
       }
       obj3.pontos.push(ponto);
     }
@@ -95,9 +95,9 @@ function pontosObj4() {
   for (let alfa = 0; alfa < 2 * Math.PI; alfa += 0.01) {
     for (let beta = 0; beta < 2 * Math.PI; beta += 0.01) {
       let ponto = {
-        x: 100 + 30 * Math.round(Math.cos(alfa) * Math.cos(beta)),
-        y: 50 + 30 * Math.round(Math.cos(alfa) * Math.sin(beta)),
-        z: 20 + 30 * Math.round(Math.sin(alfa))
+        x: parseInt(100 + 30 * Math.cos(alfa) * Math.cos(beta)),
+        y: parseInt(50 + 30 * Math.cos(alfa) * Math.sin(beta)),
+        z: parseInt(20 + 30 * Math.sin(alfa))
       }
       obj4.pontos.push(ponto);
     }
