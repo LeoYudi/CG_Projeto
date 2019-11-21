@@ -27,12 +27,13 @@ function main() {
   interpolação(planos[3]);
   interpolação(planos[4]);
   interpolação(planos[5]);
+  rotacaoY(Math.PI / 4, planos[0].pontos);
   comparaZbuffer(zbuffer, planos[0]);
-  comparaZbuffer(zbuffer, planos[1]);
-  comparaZbuffer(zbuffer, planos[2]);
-  comparaZbuffer(zbuffer, planos[3]);
-  comparaZbuffer(zbuffer, planos[4]);
-  comparaZbuffer(zbuffer, planos[5]);
+  // comparaZbuffer(zbuffer, planos[1]);
+  // comparaZbuffer(zbuffer, planos[2]);
+  // comparaZbuffer(zbuffer, planos[3]);
+  // comparaZbuffer(zbuffer, planos[4]);
+  // comparaZbuffer(zbuffer, planos[5]);
   printaZbuffer(zbuffer);
 }
 
@@ -142,4 +143,49 @@ function printaZbuffer(zbuffer) {
     }
   }
   ctx.fillStyle = 'black';
+}
+
+function multiPontoMatriz(ponto, matriz) {
+  let result = [];
+  aux = 0;
+  for (j = 0; j < matriz[0].length; j++) {
+    result[j] = 0;
+    for (k = 0; k < matriz.length; k++) {
+      result[j] += ponto[k] * matriz[k][j];
+    }
+  }
+  return result;
+}
+
+function rotacaoX(rad, pontos) {
+  let novosPontos = [];
+  let matrizTransf = [[1, 0, 0, 0], [0, Math.cos(rad), -Math.sin(rad), 0], [0, Math.sin(rad), Math.cos(rad), 0], [0, 0, 0, 1]];
+  for (let i = 0; i < pontos.length; i++) {
+    let vet = [];
+    vet = multiPontoMatriz([pontos[i].x, pontos[i].y, pontos[i].z, 1], matrizTransf);
+    novosPontos.push({ x: vet[0], y: vet[1], z: vet[2] });
+  }
+  return novosPontos;
+}
+
+function rotacaoY(rad, pontos) {
+  let novosPontos = [];
+  let matrizTransf = [[Math.cos(rad), 0, Math.sin(rad), 0], [0, 1, 0, 0], [-Math.sin(rad), 0, Math.cos(rad), 0], [0, 0, 0, 1]];
+  for (let i = 0; i < pontos.length; i++) {
+    let vet = [];
+    vet = multiPontoMatriz([pontos[i].x, pontos[i].y, pontos[i].z, 1], matrizTransf);
+    novosPontos.push({ x: vet[0], y: vet[1], z: vet[2] });
+  }
+  return novosPontos;
+}
+
+function rotacaoZ(rad, pontos) {
+  let novosPontos = [];
+  let matrizTransf = [[Math.cos(rad), -Math.sin(rad), 0, 0], [Math.sin(rad), Math.cos(rad), 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
+  for (let i = 0; i < pontos.length; i++) {
+    let vet = [];
+    vet = multiPontoMatriz([pontos[i].x, pontos[i].y, pontos[i].z, 1], matrizTransf);
+    novosPontos.push({ x: vet[0], y: vet[1], z: vet[2] });
+  }
+  return novosPontos;
 }
