@@ -5,8 +5,14 @@ var paint_style = getComputedStyle(painting);
 canvas.width = parseInt(paint_style.getPropertyValue('width'));
 canvas.height = parseInt(paint_style.getPropertyValue('height'));
 
+var centro = {
+  x: parseInt(canvas.width / 2),
+  y: parseInt(canvas.height / 2 + 100)
+}
+
 function main() {
-  planos = [];
+  let planos = [];
+  var zbuffer = [];
   initObjs(planos);
   initPlano0(planos[0]);
   initPlano1(planos[1]);
@@ -14,8 +20,20 @@ function main() {
   initPlano3(planos[3]);
   initPlano4(planos[4]);
   initPlano5(planos[5]);
+  inicializaZbuffer(zbuffer);
   interpolação(planos[0]);
-  console.log(planos[0]);
+  interpolação(planos[1]);
+  interpolação(planos[2]);
+  interpolação(planos[3]);
+  interpolação(planos[4]);
+  interpolação(planos[5]);
+  comparaZbuffer(zbuffer, planos[0]);
+  comparaZbuffer(zbuffer, planos[1]);
+  comparaZbuffer(zbuffer, planos[2]);
+  comparaZbuffer(zbuffer, planos[3]);
+  comparaZbuffer(zbuffer, planos[4]);
+  comparaZbuffer(zbuffer, planos[5]);
+  printaZbuffer(zbuffer);
 }
 
 function initObjs(planos) {
@@ -30,44 +48,44 @@ function initObjs(planos) {
 
 function initPlano0(plano) {
   plano.vertices.push({ x: 0, y: 0, z: 0 });
-  plano.vertices.push({ x: 20, y: 0, z: 0 });
-  plano.vertices.push({ x: 0, y: 20, z: 0 });
-  plano.vertices.push({ x: 20, y: 20, z: 0 });
+  plano.vertices.push({ x: 60, y: 0, z: 0 });
+  plano.vertices.push({ x: 0, y: 60, z: 0 });
+  plano.vertices.push({ x: 60, y: 60, z: 0 });
   plano.cor = 'green'
 }
 function initPlano1(plano) {
-  plano.vertices.push({ x: 20, y: 0, z: 0 });
   plano.vertices.push({ x: 60, y: 0, z: 0 });
-  plano.vertices.push({ x: 20, y: 0, z: 20 });
-  plano.vertices.push({ x: 60, y: 0, z: 20 });
+  plano.vertices.push({ x: 180, y: 0, z: 0 });
+  plano.vertices.push({ x: 60, y: 0, z: 60 });
+  plano.vertices.push({ x: 180, y: 0, z: 60 });
   plano.cor = 'red'
 }
 function initPlano2(plano) {
   plano.vertices.push({ x: 0, y: 0, z: 0 });
-  plano.vertices.push({ x: 0, y: 0, z: 20 });
-  plano.vertices.push({ x: 0, y: 80, z: 0 });
-  plano.vertices.push({ x: 0, y: 80, z: 20 });
+  plano.vertices.push({ x: 0, y: 0, z: 60 });
+  plano.vertices.push({ x: 0, y: 240, z: 0 });
+  plano.vertices.push({ x: 0, y: 240, z: 60 });
   plano.cor = 'blue'
 }
 function initPlano3(plano) {
-  plano.vertices.push({ x: 20, y: 0, z: 0 });
-  plano.vertices.push({ x: 20, y: 80, z: 0 });
-  plano.vertices.push({ x: 20, y: 0, z: 20 });
-  plano.vertices.push({ x: 20, y: 80, z: 20 });
+  plano.vertices.push({ x: 60, y: 0, z: 0 });
+  plano.vertices.push({ x: 60, y: 240, z: 0 });
+  plano.vertices.push({ x: 60, y: 0, z: 60 });
+  plano.vertices.push({ x: 60, y: 240, z: 60 });
   plano.cor = 'yellow'
 }
 function initPlano4(plano) {
-  plano.vertices.push({ x: 40, y: 0, z: 0 });
-  plano.vertices.push({ x: 20, y: 80, z: 0 });
-  plano.vertices.push({ x: 40, y: 0, z: 20 });
-  plano.vertices.push({ x: 20, y: 80, z: 20 });
+  plano.vertices.push({ x: 120, y: 0, z: 0 });
+  plano.vertices.push({ x: 60, y: 240, z: 0 });
+  plano.vertices.push({ x: 120, y: 0, z: 60 });
+  plano.vertices.push({ x: 60, y: 240, z: 60 });
   plano.cor = 'ciano'
 }
 function initPlano5(plano) {
-  plano.vertices.push({ x: 0, y: 80, z: 0 });
-  plano.vertices.push({ x: 20, y: 80, z: 0 });
-  plano.vertices.push({ x: 0, y: 80, z: 20 });
-  plano.vertices.push({ x: 20, y: 80, z: 20 });
+  plano.vertices.push({ x: 0, y: 240, z: 0 });
+  plano.vertices.push({ x: 60, y: 240, z: 0 });
+  plano.vertices.push({ x: 0, y: 240, z: 60 });
+  plano.vertices.push({ x: 60, y: 240, z: 60 });
   plano.cor = 'green'
 }
 
@@ -91,4 +109,37 @@ function interpolação(plano) {
       plano.pontos.push(ponto);
     }
   }
+}
+
+function inicializaZbuffer(zbuffer) {
+  for (let x = 0; x < canvas.width; x++) {
+    zbuffer[x] = [];
+    for (let y = 0; y < canvas.height; y++) {
+      zbuffer[x][y] = { zmax: -Infinity, cor: 'black' };
+    }
+  }
+}
+
+function comparaZbuffer(zbuffer, obj) {
+  for (let i = 0; i < obj.pontos.length; i++) {
+    let ponto = {
+      x: parseInt(obj.pontos[i].x),
+      y: parseInt(obj.pontos[i].y),
+      z: parseInt(obj.pontos[i].z)
+    };
+    if (ponto.z > zbuffer[ponto.x + centro.x][-ponto.y + centro.y].zmax) {
+      zbuffer[ponto.x + centro.x][-ponto.y + centro.y].zmax = ponto.z;
+      zbuffer[ponto.x + centro.x][-ponto.y + centro.y].cor = obj.cor;
+    }
+  }
+}
+
+function printaZbuffer(zbuffer) {
+  for (let x = 0; x < zbuffer.length; x++) {
+    for (let y = 0; y < zbuffer[0].length; y++) {
+      ctx.fillStyle = zbuffer[x][y].cor;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+  ctx.fillStyle = 'black';
 }

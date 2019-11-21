@@ -135,9 +135,9 @@ function comparaZbuffer(obj) {
       y: obj.pontos[i].y,
       z: obj.pontos[i].z
     };
-    if (ponto.z > zbuffer[ponto.x + centro.x][ponto.y + centro.y].zmax) {
-      zbuffer[ponto.x + centro.x][ponto.y + centro.y].zmax = ponto.z;
-      zbuffer[ponto.x + centro.x][ponto.y + centro.y].cor = obj.cor;
+    if (ponto.z > zbuffer[ponto.x + centro.x][-ponto.y + centro.y].zmax) {
+      zbuffer[ponto.x + centro.x][-ponto.y + centro.y].zmax = ponto.z;
+      zbuffer[ponto.x + centro.x][-ponto.y + centro.y].cor = obj.cor;
     }
   }
 }
