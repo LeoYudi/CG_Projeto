@@ -10,27 +10,81 @@ var centro = {
   y: parseInt(canvas.height / 2 + 100)
 }
 
+var planos = [];
+var zbuffer = [];
+
 function rotacionar(event) {
   var key = event.keyCode;
   switch (key) {
     case 16:  //shift eixo z
+      limpa();
+      inicializaZbuffer();
+      for (let i = 0; i < planos.length; i++) {
+        rotacaoZ(Math.PI / 18, planos[i].pontos);
+        comparaZbuffer(planos[i]);
+      }
+      printaZbuffer(zbuffer);
       break;
     case 17:  //ctrl eixo z
+      limpa();
+      inicializaZbuffer();
+      for (let i = 0; i < planos.length; i++) {
+        rotacaoZ(- Math.PI / 18, planos[i].pontos);
+        comparaZbuffer(planos[i]);
+      }
+      printaZbuffer(zbuffer);
       break;
     case 37:  //<- eixo y
+      limpa();
+      inicializaZbuffer();
+      for (let i = 0; i < planos.length; i++) {
+        rotacaoY(-Math.PI / 18, planos[i].pontos);
+        comparaZbuffer(planos[i]);
+      }
+      printaZbuffer(zbuffer);
       break;
     case 38:  //^ eixo x
+      limpa();
+      inicializaZbuffer();
+      for (let i = 0; i < planos.length; i++) {
+        rotacaoX(Math.PI / 18, planos[i].pontos);
+        comparaZbuffer(planos[i]);
+      }
+      printaZbuffer(zbuffer);
       break;
     case 39:  //-> eixo y
+      limpa();
+      inicializaZbuffer();
+      for (let i = 0; i < planos.length; i++) {
+        rotacaoY(Math.PI / 18, planos[i].pontos);
+        comparaZbuffer(planos[i]);
+      }
+      printaZbuffer(zbuffer);
       break;
     case 40:  //V eixo x
+      limpa();
+      inicializaZbuffer();
+      for (let i = 0; i < planos.length; i++) {
+        rotacaoX(-Math.PI / 18, planos[i].pontos);
+        comparaZbuffer(planos[i]);
+      }
+      printaZbuffer(zbuffer);
       break;
   }
 }
 
 function main() {
-  let planos = [];
-  var zbuffer = [];
+  inicialização();
+  for (let i = 0; i < 6; i++) {
+    interpolação(planos[i]);
+    rotacaoX(-Math.PI / 9, planos[i].pontos);
+    rotacaoY(Math.PI / 9, planos[i].pontos);
+    comparaZbuffer(planos[i]);
+  }
+  printaZbuffer();
+}
+
+function inicialização() {
   initObjs(planos);
   initPlano0(planos[0]);
   initPlano1(planos[1]);
@@ -39,28 +93,16 @@ function main() {
   initPlano4(planos[4]);
   initPlano5(planos[5]);
   inicializaZbuffer(zbuffer);
-  interpolação(planos[0]);
-  interpolação(planos[1]);
-  interpolação(planos[2]);
-  interpolação(planos[3]);
-  interpolação(planos[4]);
-  interpolação(planos[5]);
-  comparaZbuffer(zbuffer, planos[0]);
-  comparaZbuffer(zbuffer, planos[1]);
-  comparaZbuffer(zbuffer, planos[2]);
-  comparaZbuffer(zbuffer, planos[3]);
-  comparaZbuffer(zbuffer, planos[4]);
-  comparaZbuffer(zbuffer, planos[5]);
-  printaZbuffer(zbuffer);
 }
 
-function initObjs(planos) {
+function initObjs() {
   for (let i = 0; i < 6; i++) {
-    planos[i] = {
+    let plano = {
       vertices: [],
       pontos: [],
       cor: '',
     }
+    planos.push(plano);
   }
 }
 
@@ -108,8 +150,8 @@ function initPlano5(plano) {
 }
 
 function interpolação(plano) {
-  for (let u = 0; u <= 1; u += 0.005) {
-    for (let v = 0; v <= 1; v += 0.005) {
+  for (let u = 0; u <= 1; u += 0.002) {
+    for (let v = 0; v <= 1; v += 0.002) {
       let ponto = {
         x: (1 - u) * (1 - v) * plano.vertices[0].x +
           (1 - u) * v * plano.vertices[1].x +
@@ -129,7 +171,7 @@ function interpolação(plano) {
   }
 }
 
-function inicializaZbuffer(zbuffer) {
+function inicializaZbuffer() {
   for (let x = 0; x < canvas.width; x++) {
     zbuffer[x] = [];
     for (let y = 0; y < canvas.height; y++) {
@@ -138,7 +180,7 @@ function inicializaZbuffer(zbuffer) {
   }
 }
 
-function comparaZbuffer(zbuffer, obj) {
+function comparaZbuffer(obj) {
   for (let i = 0; i < obj.pontos.length; i++) {
     let ponto = {
       x: parseInt(obj.pontos[i].x),
@@ -152,7 +194,7 @@ function comparaZbuffer(zbuffer, obj) {
   }
 }
 
-function printaZbuffer(zbuffer) {
+function printaZbuffer() {
   for (let x = 0; x < zbuffer.length; x++) {
     for (let y = 0; y < zbuffer[0].length; y++) {
       ctx.fillStyle = zbuffer[x][y].cor;
@@ -175,36 +217,36 @@ function multiPontoMatriz(ponto, matriz) {
 }
 
 function rotacaoX(rad, pontos) {
-  let novosPontos = [];
   let matrizTransf = [[1, 0, 0, 0], [0, Math.cos(rad), -Math.sin(rad), 0], [0, Math.sin(rad), Math.cos(rad), 0], [0, 0, 0, 1]];
   for (let i = 0; i < pontos.length; i++) {
     let vet = [];
     vet = multiPontoMatriz([pontos[i].x, pontos[i].y, pontos[i].z, 1], matrizTransf);
-    novosPontos.push({ x: vet[0], y: vet[1], z: vet[2] });
+    pontos[i].x = vet[0];
+    pontos[i].y = vet[1];
+    pontos[i].z = vet[2];
   }
-  return novosPontos;
 }
 
 function rotacaoY(rad, pontos) {
-  let novosPontos = [];
   let matrizTransf = [[Math.cos(rad), 0, Math.sin(rad), 0], [0, 1, 0, 0], [-Math.sin(rad), 0, Math.cos(rad), 0], [0, 0, 0, 1]];
   for (let i = 0; i < pontos.length; i++) {
     let vet = [];
     vet = multiPontoMatriz([pontos[i].x, pontos[i].y, pontos[i].z, 1], matrizTransf);
-    novosPontos.push({ x: vet[0], y: vet[1], z: vet[2] });
+    pontos[i].x = vet[0];
+    pontos[i].y = vet[1];
+    pontos[i].z = vet[2];
   }
-  return novosPontos;
 }
 
 function rotacaoZ(rad, pontos) {
-  let novosPontos = [];
   let matrizTransf = [[Math.cos(rad), -Math.sin(rad), 0, 0], [Math.sin(rad), Math.cos(rad), 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
   for (let i = 0; i < pontos.length; i++) {
     let vet = [];
     vet = multiPontoMatriz([pontos[i].x, pontos[i].y, pontos[i].z, 1], matrizTransf);
-    novosPontos.push({ x: vet[0], y: vet[1], z: vet[2] });
+    pontos[i].x = vet[0];
+    pontos[i].y = vet[1];
+    pontos[i].z = vet[2];
   }
-  return novosPontos;
 }
 
 function limpa() {
