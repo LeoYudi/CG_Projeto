@@ -10,6 +10,24 @@ var centro = {
   y: parseInt(canvas.height / 2 + 100)
 }
 
+function rotacionar(event) {
+  var key = event.keyCode;
+  switch (key) {
+    case 16:  //shift eixo z
+      break;
+    case 17:  //ctrl eixo z
+      break;
+    case 37:  //<- eixo y
+      break;
+    case 38:  //^ eixo x
+      break;
+    case 39:  //-> eixo y
+      break;
+    case 40:  //V eixo x
+      break;
+  }
+}
+
 function main() {
   let planos = [];
   var zbuffer = [];
@@ -27,13 +45,12 @@ function main() {
   interpolação(planos[3]);
   interpolação(planos[4]);
   interpolação(planos[5]);
-  rotacaoY(Math.PI / 4, planos[0].pontos);
   comparaZbuffer(zbuffer, planos[0]);
-  // comparaZbuffer(zbuffer, planos[1]);
-  // comparaZbuffer(zbuffer, planos[2]);
-  // comparaZbuffer(zbuffer, planos[3]);
-  // comparaZbuffer(zbuffer, planos[4]);
-  // comparaZbuffer(zbuffer, planos[5]);
+  comparaZbuffer(zbuffer, planos[1]);
+  comparaZbuffer(zbuffer, planos[2]);
+  comparaZbuffer(zbuffer, planos[3]);
+  comparaZbuffer(zbuffer, planos[4]);
+  comparaZbuffer(zbuffer, planos[5]);
   printaZbuffer(zbuffer);
 }
 
@@ -50,8 +67,8 @@ function initObjs(planos) {
 function initPlano0(plano) {
   plano.vertices.push({ x: 0, y: 0, z: 0 });
   plano.vertices.push({ x: 60, y: 0, z: 0 });
-  plano.vertices.push({ x: 0, y: 60, z: 0 });
-  plano.vertices.push({ x: 60, y: 60, z: 0 });
+  plano.vertices.push({ x: 0, y: 0, z: 60 });
+  plano.vertices.push({ x: 60, y: 0, z: 60 });
   plano.cor = 'green'
 }
 function initPlano1(plano) {
@@ -80,7 +97,7 @@ function initPlano4(plano) {
   plano.vertices.push({ x: 60, y: 240, z: 0 });
   plano.vertices.push({ x: 120, y: 0, z: 60 });
   plano.vertices.push({ x: 60, y: 240, z: 60 });
-  plano.cor = 'ciano'
+  plano.cor = 'cyan'
 }
 function initPlano5(plano) {
   plano.vertices.push({ x: 0, y: 240, z: 0 });
@@ -91,8 +108,8 @@ function initPlano5(plano) {
 }
 
 function interpolação(plano) {
-  for (let u = 0; u <= 1; u += 0.01) {
-    for (let v = 0; v <= 1; v += 0.01) {
+  for (let u = 0; u <= 1; u += 0.005) {
+    for (let v = 0; v <= 1; v += 0.005) {
       let ponto = {
         x: (1 - u) * (1 - v) * plano.vertices[0].x +
           (1 - u) * v * plano.vertices[1].x +
@@ -188,4 +205,11 @@ function rotacaoZ(rad, pontos) {
     novosPontos.push({ x: vet[0], y: vet[1], z: vet[2] });
   }
   return novosPontos;
+}
+
+function limpa() {
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.restore();
 }
