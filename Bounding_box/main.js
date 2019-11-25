@@ -3,6 +3,7 @@ var ctx = canvas.getContext('2d');
 var painting = document.getElementById('paint');
 var paint_style = getComputedStyle(painting);
 var ligar = document.getElementById('ligar');
+var colorir = document.getElementById('colorir');
 canvas.width = parseInt(paint_style.getPropertyValue('width'));
 canvas.height = parseInt(paint_style.getPropertyValue('height'));
 
@@ -13,6 +14,9 @@ var poligono = {
 
 var bounding_box = {
   vertices: [],
+  pontos: [],
+  menor: { x: 0, y: 0 },
+  maior: { x: 0, y: 0 },
 }
 
 var pegarVertices;
@@ -33,7 +37,9 @@ function main() {
       for (let i = 1; i < poligono.vertices.length; i++)
         poligono.lados.push(bresenhamLinha(poligono.vertices[i - 1], poligono.vertices[i]));
       poligono.lados.push(bresenhamLinha(poligono.vertices[0], poligono.vertices[poligono.vertices.length - 1]));
-      initBoundingBox();
+      initVerticesBoundingBox();
+      initPontosBoundingBox();
+      console.log(bounding_box.pontos);
       ctx.fillStyle = 'red';
       for (let i = 1; i < bounding_box.vertices.length; i++)
         bresenhamLinha(bounding_box.vertices[i - 1], bounding_box.vertices[i]);
@@ -41,9 +47,20 @@ function main() {
       canvas.removeEventListener('click', pegarVertices, false);
     }
   }, false);
+  colorir.addEventListener('click', colorir = () => {
+    let anterior = 0;
+    for (let i = 0; i < poligono.lados.length; i++) {
+      for (let j = 0; j < poligono.lados[i].length; j++) {
+        if (anterior != poligono.lados[i][j].y)
+          inverterCor(poligono.lados[i][j]);
+        anterior = poligono.lados[i][j].y;
+      }
+    }
+    printaBoundingBox();
+  }, false);
 }
 
-function initBoundingBox() {
+function initVerticesBoundingBox() {
   let maior = {
     x: -Infinity,
     y: -Infinity
@@ -66,7 +83,33 @@ function initBoundingBox() {
   bounding_box.vertices.push({ x: menor.x, y: maior.y });
   bounding_box.vertices.push(maior);
   bounding_box.vertices.push({ x: maior.x, y: menor.y });
+  bounding_box.maior = maior;
+  bounding_box.menor = menor;
 }
+
+function initPontosBoundingBox() {
+  for (let i = 0; i < bounding_box.maior.x - bounding_box.menor.x; i++) {
+    bounding_box.pontos[i] = [];
+    for (let j = 0; j < bounding_box.maior.y - bounding_box.menor.y; j++) {
+      bounding_box.pontos[i].push('white');
+    }
+  }
+}
+
+function printaBoundingBox() {
+  for (let i = 0; i < bounding_box.maior.x - bounding_box.menor.x; i++) {
+    for (let j = 0; j < bounding_box.maior.y - bounding_box.menor.y; j++) {
+      ctx.fillStyle = bounding_box.pontos[i][j];
+      ctx.fillRect(i + bounding_box.menor.x, j + bounding_box.menor.y, 1, 1);
+    }
+  }
+}
+
+// function insertPontos(pontos) {
+//   for (let i = 0; i < pontos.length; i++) {
+//     bounding_box.pontos[pontos[i].x][pontos[i].y].cor = 'black';
+//   }
+// }
 
 function bresenhamLinha(inicio, fim) {
   // console.log(inicio, fim);
@@ -116,4 +159,15 @@ function bresenhamLinha(inicio, fim) {
     }
   }
   return pontos;
+}
+
+function inverterCor(ponto) {
+  for (let i = ponto.x - bounding_box.menor.x; i < bounding_box.maior.x - bounding_box.menor.x; i++) {
+    if (bounding_box.pontos[i][ponto.y - bounding_box.menor.y] == 'black') {
+      bounding_box.pontos[i][ponto.y - bounding_box.menor.y] = 'white';
+    }
+    else {
+      bounding_box.pontos[i][ponto.y - bounding_box.menor.y] = 'black';
+    }
+  }
 }
