@@ -50,8 +50,9 @@ function main() {
     let anterior = 0;
     for (let i = 0; i < poligono.lados.length; i++) {
       for (let j = 0; j < poligono.lados[i].length; j++) {
-        if (anterior != poligono.lados[i][j].y)
+        if (anterior != poligono.lados[i][j].y) {
           inverterCor(poligono.lados[i][j]);
+        }
         anterior = poligono.lados[i][j].y;
       }
     }
@@ -174,3 +175,11 @@ function inverterCor(ponto) {
     }
   }
 }
+
+// function éVertice(ponto) {
+//   for (let i = 0; i < poligono.vertices.length; i++) {
+//     if (ponto.x == poligono.vertices[i].x && ponto.y == poligono.vertices[i].y)
+//       return true;
+//   }
+//   return false;
+// }
