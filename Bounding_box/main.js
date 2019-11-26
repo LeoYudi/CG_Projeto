@@ -124,7 +124,8 @@ function bresenhamLinha(inicio, fim) {
     if (inicio.x <= fim.x) { // esquerda para direita
       while (atual.x <= fim.x) {
         atual.y = parseInt((m * (atual.x - inicio.x)) + inicio.y);
-        pontos.push({ x: atual.x, y: atual.y });
+        if (!(atual.x == fim.x && atual.y == fim.y))
+          pontos.push({ x: atual.x, y: atual.y });
         ctx.fillRect(atual.x, atual.y, 1, 1);
         atual.x++;
       }
@@ -132,7 +133,8 @@ function bresenhamLinha(inicio, fim) {
     else { // direita para esquerda
       while (atual.x > fim.x) {
         atual.y = parseInt((m * (atual.x - inicio.x)) + inicio.y);
-        pontos.push({ x: atual.x, y: atual.y });
+        if (!(atual.x == fim.x && atual.y == fim.y))
+          pontos.push({ x: atual.x, y: atual.y });
         ctx.fillRect(atual.x, atual.y, 1, 1);
         atual.x--;
       }
@@ -144,7 +146,8 @@ function bresenhamLinha(inicio, fim) {
     if (inicio.y <= fim.y) { // cima para baixo
       while (atual.y <= fim.y) {
         atual.x = ((atual.y - inicio.y) / m) + inicio.x;
-        pontos.push({ x: atual.x, y: atual.y });
+        if (!(atual.x == fim.x && atual.y == fim.y))
+          pontos.push({ x: atual.x, y: atual.y });
         ctx.fillRect(atual.x, atual.y, 1, 1);
         atual.y++;
       }
@@ -152,7 +155,8 @@ function bresenhamLinha(inicio, fim) {
     else {
       while (atual.y > fim.y) { // baixo para cima
         atual.x = ((atual.y - inicio.y) / m) + inicio.x;
-        pontos.push({ x: atual.x, y: atual.y });
+        if (!(atual.x == fim.x && atual.y == fim.y))
+          pontos.push({ x: atual.x, y: atual.y });
         ctx.fillRect(atual.x, atual.y, 1, 1);
         atual.y--;
       }
