@@ -76,7 +76,7 @@ function bresenhamCirculo(inicio, fim) {
     inc = 1 / raio;
   else
     inc = 1;
-  for (i; i < 360; i = i + inc)
+  for (i; i < 360; i = i + inc * 5)
     obj.push({ x: raio * Math.cos(i) + inicio.x, y: inicio.y, z: raio * Math.sin(i) + inicio.y });
 }
 
