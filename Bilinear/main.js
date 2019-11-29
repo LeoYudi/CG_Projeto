@@ -75,7 +75,7 @@ function rotacionar(event) {
 
 function main() {
   inicialização();
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 5; i++) {
     interpolação(planos[i]);
     rotacaoX(-Math.PI / 9, planos[i].pontos);
     rotacaoY(Math.PI / 9, planos[i].pontos);
@@ -86,17 +86,16 @@ function main() {
 
 function inicialização() {
   initObjs(planos);
-  initPlano0(planos[0]);
-  initPlano1(planos[1]);
-  initPlano2(planos[2]);
-  initPlano3(planos[3]);
-  initPlano4(planos[4]);
-  initPlano5(planos[5]);
+  initPlano1(planos[0]);
+  initPlano2(planos[1]);
+  initPlano3(planos[2]);
+  initPlano4(planos[3]);
+  initPlano5(planos[4]);
   inicializaZbuffer(zbuffer);
 }
 
 function initObjs() {
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 5; i++) {
     let plano = {
       vertices: [],
       pontos: [],
@@ -106,13 +105,6 @@ function initObjs() {
   }
 }
 
-function initPlano0(plano) {
-  plano.vertices.push({ x: 0, y: 0, z: 0 });
-  plano.vertices.push({ x: 60, y: 0, z: 0 });
-  plano.vertices.push({ x: 0, y: 0, z: 60 });
-  plano.vertices.push({ x: 60, y: 0, z: 60 });
-  plano.cor = 'green'
-}
 function initPlano1(plano) {
   plano.vertices.push({ x: 60, y: 0, z: 0 });
   plano.vertices.push({ x: 180, y: 0, z: 0 });
@@ -121,10 +113,10 @@ function initPlano1(plano) {
   plano.cor = 'red'
 }
 function initPlano2(plano) {
-  plano.vertices.push({ x: 0, y: 0, z: 0 });
   plano.vertices.push({ x: 0, y: 0, z: 60 });
-  plano.vertices.push({ x: 0, y: 240, z: 0 });
+  plano.vertices.push({ x: 60, y: 0, z: 60 });
   plano.vertices.push({ x: 0, y: 240, z: 60 });
+  plano.vertices.push({ x: 60, y: 240, z: 60 });
   plano.cor = 'blue'
 }
 function initPlano3(plano) {
