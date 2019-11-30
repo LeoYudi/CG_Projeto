@@ -11,56 +11,57 @@ var centro = {
 }
 
 function main() {
-
+  criarPixels();
 }
 
 function criarPixels() {
-  bresenham(centroCanvas.x + 60, centroCanvas.y - 0, centroCanvas.x + 130, centroCanvas.y - 0, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 60, centroCanvas.y - 10, centroCanvas.x + 130, centroCanvas.y - 10, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 0, centroCanvas.y - 70, centroCanvas.x + 130, centroCanvas.y - 70, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 70, centroCanvas.y - 80, centroCanvas.x + 130, centroCanvas.y - 80, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 130, centroCanvas.y - 0, centroCanvas.x + 130, centroCanvas.y - 80, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 120, centroCanvas.y - 20, centroCanvas.x + 130, centroCanvas.y - 20, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 120, centroCanvas.y - 30, centroCanvas.x + 130, centroCanvas.y - 30, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 120, centroCanvas.y - 40, centroCanvas.x + 130, centroCanvas.y - 40, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 120, centroCanvas.y - 50, centroCanvas.x + 130, centroCanvas.y - 50, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 120, centroCanvas.y - 60, centroCanvas.x + 130, centroCanvas.y - 60, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 70, centroCanvas.y - 0, centroCanvas.x + 70, centroCanvas.y - 10, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 80, centroCanvas.y - 0, centroCanvas.x + 80, centroCanvas.y - 10, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 90, centroCanvas.y - 0, centroCanvas.x + 90, centroCanvas.y - 10, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 100, centroCanvas.y - 0, centroCanvas.x + 100, centroCanvas.y - 10, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 110, centroCanvas.y - 0, centroCanvas.x + 110, centroCanvas.y - 10, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 120, centroCanvas.y - 0, centroCanvas.x + 120, centroCanvas.y - 80, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 80, centroCanvas.y - 70, centroCanvas.x + 80, centroCanvas.y - 80, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 90, centroCanvas.y - 70, centroCanvas.x + 90, centroCanvas.y - 80, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 100, centroCanvas.y - 70, centroCanvas.x + 100, centroCanvas.y - 80, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 110, centroCanvas.y - 70, centroCanvas.x + 110, centroCanvas.y - 80, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 70, centroCanvas.y - 70, centroCanvas.x + 70, centroCanvas.y - 130, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 0, centroCanvas.y - 60, centroCanvas.x + 0, centroCanvas.y - 130, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 0, centroCanvas.y - 60, centroCanvas.x + 60, centroCanvas.y - 60, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 10, centroCanvas.y - 60, centroCanvas.x + 10, centroCanvas.y - 130, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 20, centroCanvas.y - 60, centroCanvas.x + 20, centroCanvas.y - 70, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 30, centroCanvas.y - 60, centroCanvas.x + 30, centroCanvas.y - 70, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 40, centroCanvas.y - 60, centroCanvas.x + 40, centroCanvas.y - 70, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 50, centroCanvas.y - 60, centroCanvas.x + 50, centroCanvas.y - 70, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 60, centroCanvas.y - 0, centroCanvas.x + 60, centroCanvas.y - 70, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 0, centroCanvas.y - 130, centroCanvas.x + 70, centroCanvas.y - 130, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 0, centroCanvas.y - 120, centroCanvas.x + 70, centroCanvas.y - 120, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 20, centroCanvas.y - 120, centroCanvas.x + 20, centroCanvas.y - 130, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 30, centroCanvas.y - 120, centroCanvas.x + 30, centroCanvas.y - 130, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 40, centroCanvas.y - 120, centroCanvas.x + 40, centroCanvas.y - 130, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 50, centroCanvas.y - 120, centroCanvas.x + 50, centroCanvas.y - 130, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 60, centroCanvas.y - 120, centroCanvas.x + 60, centroCanvas.y - 130, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 0, centroCanvas.y - 80, centroCanvas.x + 10, centroCanvas.y - 80, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 0, centroCanvas.y - 90, centroCanvas.x + 10, centroCanvas.y - 90, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 0, centroCanvas.y - 100, centroCanvas.x + 10, centroCanvas.y - 100, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 0, centroCanvas.y - 110, centroCanvas.x + 10, centroCanvas.y - 110, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 0, centroCanvas.y - 120, centroCanvas.x + 10, centroCanvas.y - 120, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 60, centroCanvas.y - 70, centroCanvas.x + 60, centroCanvas.y - 120, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 60, centroCanvas.y - 80, centroCanvas.x + 70, centroCanvas.y - 80, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 60, centroCanvas.y - 90, centroCanvas.x + 70, centroCanvas.y - 90, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 60, centroCanvas.y - 100, centroCanvas.x + 70, centroCanvas.y - 100, ctx, color = "#FF0000");
-  bresenham(centroCanvas.x + 60, centroCanvas.y - 110, centroCanvas.x + 70, centroCanvas.y - 110, ctx, color = "#FF0000");
+  let vet = [];
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 60, y: centro.y - 0 }, { x: centro.x + 130, y: centro.y - 0 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 60, y: centro.y - 10 }, { x: centro.x + 130, y: centro.y - 10 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 0, y: centro.y - 70 }, { x: centro.x + 130, y: centro.y - 70 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 70, y: centro.y - 80 }, { x: centro.x + 130, y: centro.y - 80 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 130, y: centro.y - 0 }, { x: centro.x + 130, y: centro.y - 80 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 120, y: centro.y - 20 }, { x: centro.x + 130, y: centro.y - 20 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 120, y: centro.y - 30 }, { x: centro.x + 130, y: centro.y - 30 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 120, y: centro.y - 40 }, { x: centro.x + 130, y: centro.y - 40 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 120, y: centro.y - 50 }, { x: centro.x + 130, y: centro.y - 50 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 120, y: centro.y - 60 }, { x: centro.x + 130, y: centro.y - 60 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 70, y: centro.y - 0 }, { x: centro.x + 70, y: centro.y - 10 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 80, y: centro.y - 0 }, { x: centro.x + 80, y: centro.y - 10 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 90, y: centro.y - 0 }, { x: centro.x + 90, y: centro.y - 10 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 100, y: centro.y - 0 }, { x: centro.x + 100, y: centro.y - 10 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 110, y: centro.y - 0 }, { x: centro.x + 110, y: centro.y - 10 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 120, y: centro.y - 0 }, { x: centro.x + 120, y: centro.y - 80 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 80, y: centro.y - 70 }, { x: centro.x + 80, y: centro.y - 80 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 90, y: centro.y - 70 }, { x: centro.x + 90, y: centro.y - 80 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 100, y: centro.y - 70 }, { x: centro.x + 100, y: centro.y - 80 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 110, y: centro.y - 70 }, { x: centro.x + 110, y: centro.y - 80 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 70, y: centro.y - 70 }, { x: centro.x + 70, y: centro.y - 130 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 0, y: centro.y - 60 }, { x: centro.x + 0, y: centro.y - 130 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 0, y: centro.y - 60 }, { x: centro.x + 60, y: centro.y - 60 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 10, y: centro.y - 60 }, { x: centro.x + 10, y: centro.y - 130 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 20, y: centro.y - 60 }, { x: centro.x + 20, y: centro.y - 70 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 30, y: centro.y - 60 }, { x: centro.x + 30, y: centro.y - 70 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 40, y: centro.y - 60 }, { x: centro.x + 40, y: centro.y - 70 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 50, y: centro.y - 60 }, { x: centro.x + 50, y: centro.y - 70 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 60, y: centro.y - 0 }, { x: centro.x + 60, y: centro.y - 70 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 0, y: centro.y - 130 }, { x: centro.x + 70, y: centro.y - 130 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 0, y: centro.y - 120 }, { x: centro.x + 70, y: centro.y - 120 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 20, y: centro.y - 120 }, { x: centro.x + 20, y: centro.y - 130 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 30, y: centro.y - 120 }, { x: centro.x + 30, y: centro.y - 130 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 40, y: centro.y - 120 }, { x: centro.x + 40, y: centro.y - 130 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 50, y: centro.y - 120 }, { x: centro.x + 50, y: centro.y - 130 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 60, y: centro.y - 120 }, { x: centro.x + 60, y: centro.y - 130 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 0, y: centro.y - 80 }, { x: centro.x + 10, y: centro.y - 80 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 0, y: centro.y - 90 }, { x: centro.x + 10, y: centro.y - 90 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 0, y: centro.y - 100 }, { x: centro.x + 10, y: centro.y - 100 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 0, y: centro.y - 110 }, { x: centro.x + 10, y: centro.y - 110 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 0, y: centro.y - 120 }, { x: centro.x + 10, y: centro.y - 120 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 60, y: centro.y - 70 }, { x: centro.x + 60, y: centro.y - 120 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 60, y: centro.y - 80 }, { x: centro.x + 70, y: centro.y - 80 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 60, y: centro.y - 90 }, { x: centro.x + 70, y: centro.y - 90 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 60, y: centro.y - 100 }, { x: centro.x + 70, y: centro.y - 100 }));
+  vet = vet.concat(bresenhamLinha({ x: centro.x + 60, y: centro.y - 110 }, { x: centro.x + 70, y: centro.y - 110 }));
 }
 
 function bresenhamLinha(inicio, fim) {
